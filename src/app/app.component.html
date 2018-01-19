@@ -10,6 +10,7 @@
     </div>
   </div>
   <div *ngIf="signedIn" class="dropdown">
+    <img *ngIf="user.photoURL" class="avatar" src="{{user.photoURL}}">
     <button class="dropbtn">{{displayName}}</button>
     <div class="dropdown-content">
       <button class="signout" (click)="signOut()">Sign Out</button>

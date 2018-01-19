@@ -3,7 +3,6 @@ import { FirebaseUISignInSuccess } from 'firebaseui-angular';
 import * as firebase from 'firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FirebaseApp } from 'angularfire2';
-import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +27,7 @@ export class AppComponent {
           successData.currentUser = response;
           this.successCallback(successData);      
         }
-        console.log('Logged in :)');
+        console.log('Logged in :)', response);
       } else {
         console.log('Logged out :(');
       }
