@@ -36,7 +36,7 @@ const firebaseUiAuthConfig: FirebaseUIAuthConfig = {
     AngularFireAuthModule,
     FirebaseUIModule.forRoot(firebaseUiAuthConfig)
   ],
-  providers: [AuthService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
