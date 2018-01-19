@@ -14,6 +14,7 @@ import {
 import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AuthService } from './auth.service';
 
 const firebaseUiAuthConfig: FirebaseUIAuthConfig = {
   providers: [
@@ -35,7 +36,7 @@ const firebaseUiAuthConfig: FirebaseUIAuthConfig = {
     AngularFireAuthModule,
     FirebaseUIModule.forRoot(firebaseUiAuthConfig)
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

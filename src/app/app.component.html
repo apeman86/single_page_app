@@ -3,16 +3,16 @@
   <div class="title">
     Welcome to {{ title }}!
   </div>
-  <div *ngIf="!user" class="dropdown">
+  <div *ngIf="!signedIn" class="dropdown">
     <button class="dropbtn">Sign In</button>
     <div class="dropdown-content">
       <firebase-ui (signInSuccess)="successCallback($event)"></firebase-ui>
     </div>
   </div>
-  <div *ngIf="user" class="dropdown">
+  <div *ngIf="signedIn" class="dropdown">
     <button class="dropbtn">{{displayName}}</button>
     <div class="dropdown-content">
-      <button>Sign Out</button>
+      <button class="signout" (click)="signOut()">Sign Out</button>
     </div>
   </div>
 </div>
