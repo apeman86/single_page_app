@@ -4,18 +4,19 @@
     Welcome to {{ title }}!
   </div>
   <div *ngIf="!signedIn" class="dropdown">
-    <button class="dropbtn">Sign In</button>
-    <div class="dropdown-content">
+    <button class="dropbtn" (click)="open()">Sign In</button>
+    <div class="dropdown-content" [ngClass]="{'open': isOpen}">
       <firebase-ui (signInSuccess)="successCallback($event)"></firebase-ui>
     </div>
   </div>
   <div *ngIf="signedIn" class="dropdown">
-    <img *ngIf="user.photoURL" class="avatar" src="{{user.photoURL}}">
-    <button class="dropbtn">{{displayName}}</button>
-    <div class="dropdown-content">
+    <img *ngIf="profileContext.user.photoURL" class="avatar" src="{{profileContext.user.photoURL}}">
+    <button class="dropbtn" (click)="open()">{{profileContext.displayName}}</button>
+    <div class="dropdown-content" [ngClass]="{'open': isOpen }">
       <button class="signout" (click)="signOut()">Sign Out</button>
     </div>
   </div>
 </div>
+<app-profile [profileContext]="profileContext"></app-profile>
 
 

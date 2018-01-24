@@ -3,6 +3,9 @@ import { FirebaseUISignInSuccess } from 'firebaseui-angular';
 import * as firebase from 'firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FirebaseApp } from 'angularfire2';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { ProfileContext } from './models/profile.context';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +14,14 @@ import { FirebaseApp } from 'angularfire2';
 })
 export class AppComponent {
   title = 'My App';
+  isOpen: boolean = false;
   user: firebase.User;
   displayName: string;
   signedIn: boolean = false;
-
-  constructor(public angularFirebaseAuth: AngularFireAuth) {
-    
+  profileContext: ProfileContext;
+  profileObservable: Observable<any>;
+  constructor(public angularFirebaseAuth: AngularFireAuth, public afdb: AngularFireDatabase) {
+    this.profileContext = new ProfileContext();
   }
 
   ngOnInit() {
@@ -27,7 +32,6 @@ export class AppComponent {
           successData.currentUser = response;
           this.successCallback(successData);      
         }
-        console.log('Logged in :)', response);
       } else {
         console.log('Logged out :(');
       }
@@ -35,16 +39,47 @@ export class AppComponent {
   }
 
   successCallback(signInSuccessData: FirebaseUISignInSuccess) {
-    this.user = signInSuccessData.currentUser;    
-    this.displayName = this.user.displayName;
+    this.profileContext.user = signInSuccessData.currentUser;
+    console.log(this.profileContext.user);
     this.signedIn = true;
+    this.open();
+    this.afdb.object('/users/' + this.profileContext.user.uid).query.once('value', (response) => {
+      if (this.signedIn) {
+        let profile = response.val();
+        if (profile) {
+          this.profileContext.name = profile.name;
+          this.profileContext.email = profile.email;
+          this.profileContext.displayName = profile.username;
+          this.afdb.object('/users/' + this.profileContext.user.uid).update({lastLogin: new Date()});
+        } else {
+          let displayName: string 
+          while (!displayName) {
+            displayName = prompt('Please enter a Username:');
+            let data = {};
+            if(displayName != null) {
+              data[displayName] = this.profileContext.user.uid;
+              console.log(displayName);
+              this.afdb.object('/usernames/').update(data).then((success) =>{
+                let data = {};
+                data[this.profileContext.user.uid] = {username: displayName, email: this.profileContext.user.email, name: this.profileContext.user.displayName, lastLogin: new Date()};
+                this.afdb.object('/users/').update(data);
+              });
+            }
+          }
+        }
+      }
+    });
   }
 
   signOut() {
     this.angularFirebaseAuth.auth.signOut().then(() => {
       this.signedIn = false;
-      delete this.user;
-      delete this.displayName;
+      this.profileContext.clear();
+      this.open();
     });
+  }
+
+  open() {
+    this.isOpen = !this.isOpen;
   }
 }

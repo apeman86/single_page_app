@@ -57,16 +57,20 @@
 }
 
 /* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
+.dropdown .dropdown-content.open {
     display: flex;
 }
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {
+.dropdown .dropbtn {
     background-color: #3e8e41;
 }
 
 .avatar {
     height: 50px;
     width: 50px;
+}
+
+app-profile {
+    margin-top: 85px;
 }

@@ -1,8 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { AngularFireDatabase, AngularFireDatabaseModule } from 'angularfire2/database';
 import { AppComponent } from './app.component';
+import { ProfileComponent } from './profile.component';
+import { ProfileContext } from './models/profile.context'
 import {
   AuthMethods,
   AuthProvider,
@@ -14,7 +16,7 @@ import {
 import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AuthService } from './auth.service';
+import { CommonModule } from '@angular/common';
 
 const firebaseUiAuthConfig: FirebaseUIAuthConfig = {
   providers: [
@@ -28,15 +30,21 @@ const firebaseUiAuthConfig: FirebaseUIAuthConfig = {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent, ProfileComponent
   ],
   imports: [
     BrowserModule,
+    CommonModule,
+    FormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
-    FirebaseUIModule.forRoot(firebaseUiAuthConfig)
+    AngularFireDatabaseModule,
+    FirebaseUIModule.forRoot(firebaseUiAuthConfig),
+    
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [AngularFireDatabase, ProfileContext],
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
+
