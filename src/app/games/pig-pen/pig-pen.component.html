@@ -1,0 +1,13 @@
+<div #board id="game-board" class="game-board">
+  <table>
+    <ng-container *ngFor="let postArray of gamestate.posts; let i = index">
+      <tr>
+        <ng-container *ngFor="let post of postArray; let j = index">
+          <td>
+            <div id="{{post.myCol}}-{{post.myRow}}" class="circle"(click)="selectPost(post)" (mouseenter) ="mouseEnter(post)" (mouseleave) ="mouseLeave(post)" [ngClass]="{'selected': post.selected, 'selectable': post.selectable, 'hover': post.hover}"></div>
+          </td>
+        </ng-container>
+      </tr>
+    </ng-container>
+  </table>
+</div>

@@ -1,0 +1,17 @@
+
+.game-container {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.gamecard {
+    height: 200px;
+    width: 350px;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    margin: 30px 15px 0 15px;    
+}

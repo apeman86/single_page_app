@@ -3,6 +3,7 @@
     height: 80px;
     display: flex;
     justify-content: space-between;
+    margin: 0px;
 }
 
 .topnav .title {
@@ -23,6 +24,25 @@
     cursor: pointer;
 }
 
+.menucontainer{
+    display: flex;
+}
+
+.menubtn {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    margin: 15px;
+    padding: 11px 18px;
+}
+
+.menubtn i {
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
     margin: 15px;
@@ -40,6 +60,7 @@
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     margin-top: 50px;
+    padding-bottom: 1em;
 }
 
 .dropdown-content .signout {
@@ -53,7 +74,7 @@
     height: auto;
     border: none;
     cursor: pointer;
-    margin: 1em 2em 1em 2em;
+    margin: 1em 2em 0 2em;
 }
 
 /* Show the dropdown menu on hover */
@@ -73,4 +94,18 @@
 
 app-profile {
     margin-top: 85px;
+}
+
+app-games {
+    margin-top: 85px;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.display-area {
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+    position: relative;
 }

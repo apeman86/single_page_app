@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
 import * as firebase from 'firebase';
+import { Subject } from "rxjs/Subject";
+import { ProfileContextEvent } from "./profile.context.event";
 
 @Injectable()
 export class ProfileContext {
@@ -7,9 +9,12 @@ export class ProfileContext {
     displayName: string;
     email: string;
     name: string;
+    show: boolean = false;
     constructor() {
 
     }
+
+    profileContextUpdated: Subject<ProfileContextEvent> = new Subject<ProfileContextEvent>();
 
     clear(): void {
         this.displayName = undefined;

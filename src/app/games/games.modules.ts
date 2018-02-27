@@ -3,9 +3,9 @@ import { HttpModule } from '@angular/http';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AngularFireDatabase, AngularFireDatabaseModule } from 'angularfire2/database';
-import { AppComponent } from './app.component';
-import { ProfileComponent } from './profile.component';
-import { ProfileContext } from './models/profile.context'
+import { AppComponent } from '../app.component';
+import { ProfileComponent } from '../profile.component';
+import { ProfileContext } from '../models/profile.context'
 import {
   AuthMethods,
   AuthProvider,
@@ -15,17 +15,17 @@ import {
   FirebaseUIModule
 } from 'firebaseui-angular';
 import { AngularFireModule } from 'angularfire2';
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { CommonModule } from '@angular/common';
-import { FriendsComponent } from './friends/friends.component';
 import { MatIconRegistry, MatIconModule } from '@angular/material';
-import { GamesComponent } from './games/games.component';
-import { GameContext } from './models/game.context';
-import { ProfileService } from './services/profile.service';
-import { GamesModule } from './games/games.modules';
-import { routing } from './app.routes';
-
+import { GamesComponent } from './games.component';
+import { GameContext } from '../models/game.context';
+import { FriendsComponent } from '../friends/friends.component';
+import { ProfileService } from '../services/profile.service';
+import { routing } from './games.routes';
+import { PigPenComponent } from './pig-pen/pig-pen.component';
+import { Post } from './pig-pen/models/post';
 
 const firebaseUiAuthConfig: FirebaseUIAuthConfig = {
   providers: [
@@ -39,7 +39,7 @@ const firebaseUiAuthConfig: FirebaseUIAuthConfig = {
 
 @NgModule({
   declarations: [
-    AppComponent, ProfileComponent, FriendsComponent
+    GamesComponent, PigPenComponent
   ],
   imports: [
     routing,
@@ -51,16 +51,9 @@ const firebaseUiAuthConfig: FirebaseUIAuthConfig = {
     AngularFireDatabaseModule,
     FirebaseUIModule.forRoot(firebaseUiAuthConfig),
     HttpModule,
-    MatIconModule,
-    GamesModule
+    MatIconModule
   ],
   providers: [AngularFireDatabase, ProfileContext, GameContext, ProfileService],
-  bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule { 
-  constructor(matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer){
-    matIconRegistry.addSvgIconSet(domSanitizer.bypassSecurityTrustResourceUrl('./assets/mdi.svg'));
-  }
-}
-
+export class GamesModule {}

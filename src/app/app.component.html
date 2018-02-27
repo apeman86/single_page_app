@@ -3,20 +3,30 @@
   <div class="title">
     Welcome to {{ title }}!
   </div>
-  <div *ngIf="!signedIn" class="dropdown">
-    <button class="dropbtn" (click)="open()">Sign In</button>
-    <div class="dropdown-content" [ngClass]="{'open': isOpen}">
-      <firebase-ui (signInSuccess)="successCallback($event)"></firebase-ui>
+  <div class="menucontainer">
+    <button class="menubtn"><i class="material-icons">people</i>   Friends</button>
+    <div *ngIf="!signedIn" class="dropdown">
+      <button class="dropbtn" (click)="open()">Sign In</button>
+      <div class="dropdown-content" [ngClass]="{'open': isOpen}">
+        <firebase-ui (signInSuccess)="successCallback($event)"></firebase-ui>
+      </div>
     </div>
-  </div>
-  <div *ngIf="signedIn" class="dropdown">
-    <img *ngIf="profileContext.user.photoURL" class="avatar" src="{{profileContext.user.photoURL}}">
-    <button class="dropbtn" (click)="open()">{{profileContext.displayName}}</button>
-    <div class="dropdown-content" [ngClass]="{'open': isOpen }">
-      <button class="signout" (click)="signOut()">Sign Out</button>
+    <div *ngIf="signedIn" class="dropdown">
+      <img *ngIf="profileContext.user.photoURL" class="avatar" src="{{profileContext.user.photoURL}}">
+      <button class="dropbtn" (click)="open()">{{profileContext.displayName}}</button>
+      <div class="dropdown-content" [ngClass]="{'open': isOpen }">
+        <button class="signout" (click)="showProfile($event)">Profile</button>
+        <button class="signout" (click)="signOut()">Sign Out</button>
+      </div>
     </div>
   </div>
 </div>
 <app-profile [profileContext]="profileContext"></app-profile>
+<!-- <app-friends *ngIf="profileContext.user" [profileContext]="profileContext"></app-friends> -->
+<div class="display-area">
+  <!-- <app-games *ngIf="games" [games]="games"></app-games> -->
+  <router-outlet></router-outlet>
+</div>
+
 
 

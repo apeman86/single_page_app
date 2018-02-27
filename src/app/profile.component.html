@@ -1,4 +1,4 @@
-<div class="profile-container">
+<div class="profile-container" [ngClass]="{'open': profileContext.show}">
   <div>
     <label>Name: </label><input type="text" [ngModel]="profileContext.name">
   </div>

@@ -14,6 +14,7 @@ import { Observable } from 'rxjs/Observable';
 })
 export class AppComponent {
   title = 'My App';
+  games: any;
   isOpen: boolean = false;
   user: firebase.User;
   displayName: string;
@@ -40,9 +41,9 @@ export class AppComponent {
 
   successCallback(signInSuccessData: FirebaseUISignInSuccess) {
     this.profileContext.user = signInSuccessData.currentUser;
+    this.profileContext.profileContextUpdated.next({userUpdated: true})
     console.log(this.profileContext.user);
     this.signedIn = true;
-    this.open();
     this.afdb.object('/users/' + this.profileContext.user.uid).query.once('value', (response) => {
       if (this.signedIn) {
         let profile = response.val();
@@ -63,6 +64,7 @@ export class AppComponent {
                 let data = {};
                 data[this.profileContext.user.uid] = {username: displayName, email: this.profileContext.user.email, name: this.profileContext.user.displayName, lastLogin: new Date()};
                 this.afdb.object('/users/').update(data);
+                this.open();
               });
             }
           }
@@ -81,5 +83,11 @@ export class AppComponent {
 
   open() {
     this.isOpen = !this.isOpen;
+  }
+
+  showProfile(event) {
+    this.profileContext.show = true;
+    this.isOpen = false;
+    event.stopPropagation();
   }
 }

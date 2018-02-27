@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { ProfileContext } from './models/profile.context';
@@ -12,7 +12,7 @@ export class ProfileComponent implements OnInit {
   email: string;
   name: string;
   displayName: string;
-
+  show: boolean = false;
   @Input('profileContext')
   profileContext: ProfileContext
 
@@ -22,4 +22,28 @@ export class ProfileComponent implements OnInit {
     
   }
 
+  @HostListener('document:click', ['$event'])
+  onKeyUp(ev:MouseEvent) {
+    if ( !this.getClosest(event.target, '.profile-container') && this.profileContext.show ) {
+      this.profileContext.show = false;
+    }
+  }
+
+  getClosest( elem, selector ): boolean {
+
+    // Element.matches() polyfill
+    if (!Element.prototype.matches) {
+      if (!Element.prototype.matches) {
+        Element.prototype.matches = Element.prototype.msMatchesSelector;
+      }
+    }
+
+    // Get closest match
+    for ( ; elem && elem !== document; elem = elem.parentNode ) {
+        if ( elem.matches( selector ) ) return elem;
+    }
+
+    return null;
+
+  };
 }
